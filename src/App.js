@@ -4,29 +4,29 @@ import Gallery from './components/Gallery';
 import ButtonBar from './components/ButtonBar';
 
 function App() {
-  let [data, setData] = useState({});
-  let [objectId, setObjectId] = useState(12720);
-  let [manualId, setManualId] = useState("");
+  let [data, setData] = useState({})
+  let [artId, setArtId] = useState(12720)
+  let [manualId, setManualId] = useState("")
 
   useEffect(() => {
-    document.title = `Art ID: ${objectId}`;
-    fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectId}`)
+    document.title = `Art ID: ${artId}`;
+    fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${artId}`)
       .then(response => response.json())
       .then(resdata => setData(resdata))
       .catch(error => {
         console.error('Error fetching data:', error);
         setData({});
-      });
-  }, [objectId]);
+      })
+  }, [artId]);
 
   const handleIterate = (e) => {
-    setObjectId(objectId + Number(e.target.value));
+    setArtId(artId + Number(e.target.value));
   };
 
   const handleManualInput = () => {
     const newId = parseInt(manualId, 10);
     if (!isNaN(newId)) {
-      setObjectId(newId);
+      setArtId(newId);
     }
   };
 
@@ -34,7 +34,7 @@ function App() {
     if (!data || !data.primaryImage) {
       return <h2>No Image!</h2>;
     }
-    return <Gallery objectImg={data.primaryImage} title={data.title} />;
+    return <Gallery artImg={data.primaryImage} title={data.title} />;
   };
 
   return (
@@ -54,7 +54,8 @@ function App() {
         <button onClick={handleManualInput}>Go</button>
       </div>
     </div>
-  );
+  )
 };
 
 export default App;
+
